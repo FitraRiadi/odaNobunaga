@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import FoldText from "./FoldText.jsx";
+import SplashCursor from "./SplashCursor.jsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -83,6 +84,7 @@ export default function Hero({ start = false }) {
     <section ref={sectionRef} className="hero" id="overview">
       <div className="hero-bg" />
       <div className="hero-glow" />
+      {!reduce && <SplashCursor RAINBOW_MODE={false} COLOR="#c53d26" />}
       <motion.div
         className="hero-dust"
         aria-hidden="true"
