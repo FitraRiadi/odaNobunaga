@@ -1,7 +1,8 @@
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import FoldText from "./FoldText.jsx";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -53,6 +54,15 @@ export default function Hero() {
 
   // Kalau reduced-motion: entrance Framer di-skip (initial: false),
   // GSAP pin/scrub gak dipasang. Semua langsung tampil statis.
+
+  // FoldText judul dimainkan sedikit telat (350ms) biar jalan
+  // berurutan abis kana — ghost tak-kelihatan jaga layout biar gak shift.
+  const [foldReady, setFoldReady] = useState(reduce);
+  useEffect(() => {
+    if (reduce) return;
+    const t = window.setTimeout(() => setFoldReady(true), 350);
+    return () => window.clearTimeout(t);
+  }, [reduce]);
 
   return (
     <section ref={sectionRef} className="hero" id="overview">
@@ -126,14 +136,28 @@ export default function Hero() {
         >
           織 田 信 長 ・ 天 下 布 武
         </motion.span>
-        <motion.h1
-          className="hero-h1"
-          initial={reduce ? false : { opacity: 0, y: 44 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.4, ease: EASE_OUT }}
-        >
-          ODA NOBUNAGA
-        </motion.h1>
+        <h1 className="hero-h1 hero-h1-fold">
+          {foldReady ? (
+            <FoldText
+              text="ODA NOBUNAGA"
+              splitBy="char"
+              hinge="top"
+              trigger="mount"
+              duration={0.65}
+              stagger={0.045}
+              ease="power3.out"
+              perspective={700}
+              creaseShading={0.55}
+              fontSize="inherit"
+              fontWeight={700}
+              color="transparent"
+            />
+          ) : (
+            <span className="hero-h1-ghost" aria-hidden="true">
+              ODA NOBUNAGA
+            </span>
+          )}
+        </h1>
         <motion.div
           className="hero-divider"
           initial={reduce ? false : { opacity: 0, scaleX: 0.6 }}

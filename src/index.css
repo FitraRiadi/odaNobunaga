@@ -304,6 +304,31 @@ body {
   filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.9));
 }
 @media (min-width: 1024px) { .hero-h1 { font-size: 112px; line-height: 110px; } }
+
+/* ---------- FoldText hero title ---------- */
+/* background h1 dicabut: gradasi cuma di tiap panel (anti double-paint).
+   filter dicabut: filter bikin 3D fold ke-flatten. */
+.hero-h1-fold {
+  filter: none;
+  background: none;
+}
+.hero-h1-fold .fold-text {
+  font-size: 32px;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: 0.06em;
+}
+/* Satu baris utuh (NBSP) — ukurannya dijaga biar selalu muat di viewport. */
+@media (max-width: 380px) { .hero-h1-fold .fold-text { font-size: 28px; } }
+@media (min-width: 480px) { .hero-h1-fold .fold-text { font-size: inherit; } }
+@media (min-width: 1024px) and (max-width: 1280px) { .hero-h1-fold .fold-text { font-size: 92px; } }
+.hero-h1-fold .fold-text-piece {
+  background: linear-gradient(to bottom, var(--gold-pale), var(--gold), var(--vermilion));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero-h1-ghost { visibility: hidden; }
 .hero-divider { display: flex; align-items: center; gap: var(--space-md); margin-top: var(--space-xs); }
 .hero-divider::before, .hero-divider::after {
   content: "";
@@ -342,13 +367,13 @@ body {
 .hero-figure {
   position: absolute;
   inset-inline: 0;
-  top: 18%;
+  top: 14%;
   z-index: 4;
   display: flex;
   justify-content: center;
   pointer-events: none;
 }
-@media (min-width: 640px) { .hero-figure { top: 16%; } }
+@media (min-width: 640px) { .hero-figure { top: 12%; } }
 .hero-figure-inner { position: relative; width: 300px; max-height: 720px; display: flex; align-items: flex-end; justify-content: center; }
 @media (min-width: 640px) { .hero-figure-inner { width: 380px; } }
 @media (min-width: 1024px) { .hero-figure-inner { width: 480px; } }
