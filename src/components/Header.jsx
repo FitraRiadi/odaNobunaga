@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { NAV_LINKS } from "../data/content.js";
 
-export default function Header() {
+export default function Header({ start = true }) {
+  const reduce = useReducedMotion();
   const [active, setActive] = useState("overview");
 
   // Overview = balik mentok ke atas (top hero). Anchor biasa mendaratnya
@@ -36,7 +38,12 @@ export default function Header() {
 
   return (
     <header className="site-header">
-      <div className="site-header-inner">
+      <motion.div
+        className="site-header-inner"
+        initial={reduce ? false : { opacity: 0 }}
+        animate={reduce ? undefined : { opacity: start ? 1 : 0 }}
+        transition={{ duration: 0.6, delay: 0.6 }}
+      >
         <nav className="main-nav" aria-label="Navigasi utama">
           {NAV_LINKS.map((l) => (
             <a
@@ -60,7 +67,7 @@ export default function Header() {
             <span>Explore Chronicles</span>
           </a>
         </div>
-      </div>
+      </motion.div>
     </header>
   );
 }

@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -14,7 +14,11 @@ const BADGES = [
   { icon: "shield", text: "ODA CLAN KAMON • 織田木瓜", gold: false },
 ];
 
-export default function Hero() {
+// Entrance hero DI-GATE prop `start` (dari preloader di App).
+// Sebelum start=true semua elemen parkir di "hidden" — jadi koreografi
+// selalu mulai dari kondisi aset lengkap, gak ada "jep" pas hard refresh.
+// reduced-motion: langsung final, tanpa animasi.
+export default function Hero({ start = false }) {
   const reduce = useReducedMotion();
   const sectionRef = useRef(null);
   const kanjiRef = useRef(null);
@@ -24,6 +28,24 @@ export default function Hero() {
   const castleRRef = useRef(null);
   const figureRef = useRef(null);
   const badgesRef = useRef(null);
+
+  const play = start || reduce;
+  const ent = (hidden, to, delay, duration) => ({
+    initial: reduce ? false : "hidden",
+    animate: reduce ? undefined : play ? "show" : "hidden",
+    variants: {
+      hidden,
+      show: {
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        scaleX: 1,
+        ...to,
+        transition: { duration, delay, ease: EASE_OUT },
+      },
+    },
+  });
 
   // GSAP own scroll (scrub + pin). Framer own entrance di elemen anak
   // biar transform-nya gak rebutan.
@@ -52,17 +74,10 @@ export default function Hero() {
     return () => ctx.revert();
   }, [reduce ]);
 
-  // Kalau reduced-motion: entrance Framer di-skip (initial: false),
-  // GSAP pin/scrub gak dipasang. Semua langsung tampil statis.
-
-  // FoldText judul dimainkan sedikit telat (350ms) biar jalan
-  // berurutan abis kana — ghost tak-kelihatan jaga layout biar gak shift.
-  const [foldReady, setFoldReady] = useState(reduce);
+  // Ukur ulang pin pas entrance dimulai (jor-joran lawan font swap).
   useEffect(() => {
-    if (reduce) return;
-    const t = window.setTimeout(() => setFoldReady(true), 350);
-    return () => window.clearTimeout(t);
-  }, [reduce]);
+    if (play && !reduce) ScrollTrigger.refresh();
+  }, [play, reduce]);
 
   return (
     <section ref={sectionRef} className="hero" id="overview">
@@ -71,9 +86,7 @@ export default function Hero() {
       <motion.div
         className="hero-dust"
         aria-hidden="true"
-        initial={reduce ? false : { opacity: 0 }}
-        animate={{ opacity: 0.6 }}
-        transition={{ duration: 1.4, delay: 1.2 }}
+        {...ent({ opacity: 0 }, { opacity: 0.6 }, 1.2, 1.4)}
       >
         <svg width="100%" height="100%">
           <circle cx="15%" cy="30%" r="1.5" fill="#ecc06c">
@@ -101,9 +114,7 @@ export default function Hero() {
         <div className="hero-kanji-shift">
         <motion.span
           className="hero-kanji-glyph"
-          initial={reduce ? false : { opacity: 0, scale: 1.15, y: 40 }}
-          animate={{ opacity: 0.04, scale: 1, y: 0 }}
-          transition={{ duration: 1.4, delay: 0.1, ease: EASE_OUT }}
+          {...ent({ opacity: 0, scale: 1.15, y: 40 }, { opacity: 0.04, scale: 1, y: 0 }, 0.1, 1.4)}
         >
           武
         </motion.span>
@@ -113,9 +124,7 @@ export default function Hero() {
       <div ref={eraRef} className="hero-era" aria-hidden="true">
         <motion.div
           className="hero-era-track"
-          initial={reduce ? false : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1.2 }}
+          {...ent({ opacity: 0 }, { opacity: 1 }, 0, 1.2)}
         >
           {[0, 1].map((half) => (
             <div className="hero-era-group" key={half} aria-hidden={half === 1}>
@@ -130,14 +139,12 @@ export default function Hero() {
       <div ref={titleRef} className="hero-title-block">
         <motion.span
           className="hero-kana"
-          initial={reduce ? false : { opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.25, ease: EASE_OUT }}
+          {...ent({ opacity: 0, y: 24 }, {}, 0.25, 0.8)}
         >
           織 田 信 長 ・ 天 下 布 武
         </motion.span>
         <h1 className="hero-h1 hero-h1-fold">
-          {foldReady ? (
+          {play ? (
             <FoldText
               text="ODA NOBUNAGA"
               splitBy="char"
@@ -160,14 +167,10 @@ export default function Hero() {
         </h1>
         <motion.div
           className="hero-divider"
-          initial={reduce ? false : { opacity: 0, scaleX: 0.6 }}
-          animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ duration: 0.8, delay: 0.7, ease: EASE_OUT }}
+          {...ent({ opacity: 0, scaleX: 0.6 }, {}, 0.7, 0.8)}
         >
           <motion.span
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.85 }}
+            {...ent({ opacity: 0 }, {}, 0.85, 0.6)}
           >
             Demon King of the Sixth Heaven • 第六天魔王
           </motion.span>
@@ -176,18 +179,14 @@ export default function Hero() {
 
       <div ref={castleLRef} className="castle-wing left" aria-hidden="true">
         <motion.div
-          initial={reduce ? false : { x: -120, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.55, ease: EASE_OUT }}
+          {...ent({ x: -120, opacity: 0 }, {}, 0.55, 1)}
         >
           <img src="/images/castle-left.png" alt="" />
         </motion.div>
       </div>
       <div ref={castleRRef} className="castle-wing right" aria-hidden="true">
         <motion.div
-          initial={reduce ? false : { x: 120, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 1, delay: 0.55, ease: EASE_OUT }}
+          {...ent({ x: 120, opacity: 0 }, {}, 0.55, 1)}
         >
           <img src="/images/castle-right.png" alt="" />
         </motion.div>
@@ -196,9 +195,7 @@ export default function Hero() {
       <div ref={figureRef} className="hero-figure" aria-hidden="true">
         <motion.div
           className="hero-figure-inner"
-          initial={reduce ? false : { y: 140, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1.1, delay: 0.75, ease: EASE_OUT }}
+          {...ent({ y: 140, opacity: 0 }, {}, 0.75, 1.1)}
         >
           <img src="/images/nobunaga-hero.png" alt="Oda Nobunaga" />
         </motion.div>
@@ -210,9 +207,7 @@ export default function Hero() {
             <motion.div
               key={b.text}
               className={`hero-badge${b.gold ? " gold" : ""}`}
-              initial={reduce ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.05 + i * 0.12, ease: EASE_OUT }}
+              {...ent({ opacity: 0, y: 16 }, {}, 1.05 + i * 0.12, 0.5)}
             >
               <span className="material-symbols-outlined">{b.icon}</span>
               <span>{b.text}</span>

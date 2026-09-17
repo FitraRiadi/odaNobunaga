@@ -392,6 +392,11 @@ body {
   object-position: bottom;
   filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.9)) drop-shadow(0 0 45px rgba(236, 192, 108, 0.22)) contrast(1.05) brightness(1.07);
   display: block;
+  animation: figure-float 4.5s ease-in-out infinite;
+}
+@keyframes figure-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-14px) scale(1.015); }
 }
 .hero-cta {
   position: relative;
@@ -427,6 +432,61 @@ body {
 @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
 .pulse-dot { width: 0.5rem; height: 0.5rem; border-radius: 999px; background: var(--vermilion); animation: ping 1.6s infinite; }
 @keyframes ping { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+/* ---------- preloader tirai ---------- */
+.preloader { position: fixed; inset: 0; z-index: 100; background: var(--lowest); }
+.preloader-curtain {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: var(--lowest);
+}
+/* Tepi emas nempel pepet di tengah (terbaca 1 garis) + glow biar
+   gerakan tirai kebaca di atas hero yang gelap. Ikut panel = kebuka bareng. */
+.preloader-curtain.left {
+  left: 0;
+  border-right: 1px solid var(--gold);
+  box-shadow: 2px 0 16px rgba(236, 192, 108, 0.35);
+}
+.preloader-curtain.right {
+  right: 0;
+  border-left: 1px solid var(--gold);
+  box-shadow: -2px 0 16px rgba(236, 192, 108, 0.35);
+}
+.preloader-mon {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+}
+.preloader-mark {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--gold);
+  background: rgba(19, 19, 21, 0.6);
+  color: var(--gold);
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 40px rgba(236, 192, 108, 0.25);
+}
+.preloader-label {
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  /* tracking nyisain spasi di kanan → padding kiri biar glyph beneran tengah */
+  padding-left: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
 
 /* ---------- cinematic layers (GSAP scrub targets) ---------- */
 .hero-title-block,
@@ -469,8 +529,7 @@ body {
   white-space: nowrap;
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-era-track { animation: none; }
-  .scroll-hint { animation: none; }
+  .hero-era-track, .scroll-hint, .hero-figure img { animation: none; }
 }
 
 /* ---------- milestones carousel ---------- */

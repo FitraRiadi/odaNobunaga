@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useLayoutEffect, useMemo, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -94,7 +94,10 @@ const FoldText = ({
     });
   }, [text, splitBy, hinge, hingeConfig.origin, safePerspective]);
 
-  useEffect(() => {
+  // Layout effect (bukan passive effect): setup animasi HARUS kelar sebelum
+  // browser paint, kalau enggak teks bocor kelihatan 1 frame (= kedipan)
+  // tiap komponen ini di-mount telat (mis. abis preloader).
+  useLayoutEffect(() => {
     if (typeof window === 'undefined') return undefined;
 
     const root = rootRef.current;
