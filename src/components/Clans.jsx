@@ -45,6 +45,9 @@ export default function Clans() {
                   ease: EASE,
                 }}
               >
+                <span className={`clan-emblem ${c.tone}`} aria-hidden="true">
+                  {c.mon}
+                </span>
                 <img src={c.img} alt={c.name} />
                 <span className="glare-sweep idle" aria-hidden="true" />
                 <span className="glare-sweep hover" aria-hidden="true" />

@@ -10,9 +10,8 @@ export default function Header({ start = true }) {
   // pas-pasan karena ketutup header + kegeser pin spacer GSAP.
 
   // Scroll spy: tandai nav sesuai section yang lagi keliatan di layar.
-  // "clans" gak punya link sendiri, jadi dipetakan ke "legacy".
   useEffect(() => {
-    const ids = [...NAV_LINKS.map((l) => l.id), "clans"];
+    const ids = NAV_LINKS.map((l) => l.id);
     const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
     if (!sections.length) return;
     const obs = new IntersectionObserver(
@@ -20,8 +19,7 @@ export default function Header({ start = true }) {
         const visible = entries.filter((e) => e.isIntersecting);
         if (!visible.length) return;
         visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        const id = visible[0].target.id;
-        setActive(id === "clans" ? "legacy" : id);
+        setActive(visible[0].target.id);
       },
       { rootMargin: "-35% 0px -55% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
     );

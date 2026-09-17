@@ -689,7 +689,26 @@ body {
 .metrics-row strong.red { color: var(--vermilion); }
 
 /* ---------- tactics bento ---------- */
-.tactics { background: var(--lowest); padding: var(--margin) 0; }
+.tactics { background: var(--lowest); padding: var(--margin) 0; position: relative; overflow: hidden; }
+/* Tanegashima highlight: panjang, miring (dendek), di belakang kartu. */
+.tactics-gun {
+  position: absolute;
+  top: 6%;
+  left: -10%;
+  width: 120%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.9;
+  will-change: transform;
+}
+.tactics-gun img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 24px 60px rgba(0, 0, 0, 0.7)) brightness(1.05) saturate(1.05);
+}
+.tactics-wrap { position: relative; z-index: 1; }
 .bento { display: grid; grid-template-columns: 1fr; gap: var(--gutter); }
 @media (min-width: 768px) { .bento { grid-template-columns: repeat(12, 1fr); } .span7 { grid-column: span 7; } .span5 { grid-column: span 5; } }
 .pillar {
@@ -758,9 +777,27 @@ body {
   object-fit: contain;
   object-position: bottom;
   display: block;
+  position: relative;
+  z-index: 1;
   filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.6)) brightness(1.03);
   animation: clan-float 5s ease-in-out infinite;
 }
+/* Mon raksasa jadi watermark di belakang figur (ala 武 di hero). */
+.clan-emblem {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 230px;
+  line-height: 1;
+  user-select: none;
+}
+.clan-emblem.gold { color: var(--gold); opacity: 0.1; }
+.clan-emblem.red { color: var(--vermilion); opacity: 0.12; }
 /* Beda fase + tempo tiap kartu biar gak robotik (negatif = mulai acak). */
 .clan-grid .clan:nth-child(2) .clan-figure img { animation-delay: -1.2s; animation-duration: 5.6s; }
 .clan-grid .clan:nth-child(3) .clan-figure img { animation-delay: -2.8s; animation-duration: 4.6s; }

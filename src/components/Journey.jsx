@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { JOURNEY_NODES } from "../data/content.js";
 import { EASE, useRevealProps } from "../lib/anim.js";
@@ -8,9 +8,19 @@ export default function Journey() {
   const [fading, setFading] = useState(false);
   const reduce = useReducedMotion();
   const head = useRevealProps();
+  const storyRef = useRef(null);
   const node = JOURNEY_NODES[index];
 
+  const scrollToStory = () => {
+    storyRef.current?.scrollIntoView({
+      behavior: reduce ? "auto" : "smooth",
+      block: "nearest",
+    });
+  };
+
   const select = (i) => {
+    // Klik node langsung antar ke kartu penjelasan.
+    scrollToStory();
     if (i === index) return;
     setFading(true);
     window.setTimeout(() => {
@@ -76,7 +86,6 @@ export default function Journey() {
               className={`j-node${n.red ? " red" : ""}`}
               style={{ left: n.x, top: n.y }}
               onClick={() => select(i)}
-              onMouseEnter={() => select(i)}
               aria-label={`${n.year} ${n.short}`}
               initial={reduce ? false : { opacity: 0, scale: 0 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -112,7 +121,7 @@ export default function Journey() {
           ))}
         </div>
 
-        <motion.div {...head}>
+        <motion.div ref={storyRef} {...head}>
         <div className={`story-card${fading ? " fading" : ""}`}>
           <div className="story-grid">
             <div>

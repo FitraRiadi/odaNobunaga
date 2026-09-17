@@ -5,6 +5,7 @@
 .glare-sweep {
   position: absolute;
   inset: 0;
+  z-index: 2;
   pointer-events: none;
   background: linear-gradient(
     var(--glare-angle, -30deg),

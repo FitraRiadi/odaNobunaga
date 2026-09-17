@@ -5,7 +5,7 @@ export const NAV_LINKS = [
   { id: "milestones", label: "Chronicles", href: "#milestones" },
   { id: "journey", label: "Battlefields", href: "#journey" },
   { id: "tactics", label: "Azuchi Castle", href: "#tactics" },
-  { id: "legacy", label: "Legacy", href: "#legacy" },
+  { id: "clans", label: "Legacy", href: "#clans" },
 ];
 
 export const MILESTONES = [

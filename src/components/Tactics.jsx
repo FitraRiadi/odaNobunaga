@@ -1,9 +1,16 @@
+import { useLayoutEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { EASE, useRevealProps } from "../lib/anim.js";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Tactics() {
   const reduce = useReducedMotion();
   const head = useRevealProps();
+  const sectionRef = useRef(null);
+  const gunRef = useRef(null);
   const pillar = (i) =>
     reduce
       ? {}
@@ -13,9 +20,36 @@ export default function Tactics() {
           viewport: { once: true, amount: 0.2 },
           transition: { duration: 0.7, delay: (i % 2) * 0.12, ease: EASE },
         };
+  // Senapan miring (dendek): muter + ngayun 3D ngikutin scroll (scrub).
+  useLayoutEffect(() => {
+    if (reduce) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        gunRef.current,
+        { rotation: -16, rotationY: -18, y: 70 },
+        {
+          rotation: -5,
+          rotationY: 14,
+          y: -70,
+          ease: "none",
+          transformPerspective: 900,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1,
+          },
+        }
+      );
+    }, sectionRef);
+    return () => ctx.revert();
+  }, [reduce ]);
   return (
-    <section className="tactics" id="tactics">
-      <div className="wrap">
+    <section ref={sectionRef} className="tactics" id="tactics">
+      <div ref={gunRef} className="tactics-gun" aria-hidden="true">
+        <img src="/images/tanegashima-teppo.png" alt="" />
+      </div>
+      <div className="wrap tactics-wrap">
         <motion.div className="section-head split" {...head}>
           <div>
             <span className="eyebrow">Tactical Doctrine &amp; Modernity</span>
