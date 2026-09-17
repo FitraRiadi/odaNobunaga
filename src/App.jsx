@@ -3,6 +3,7 @@ import { AnimatePresence, useReducedMotion } from "framer-motion";
 import Header from "./components/Header.jsx";
 import Hero from "./components/Hero.jsx";
 import Preloader from "./components/Preloader.jsx";
+import ScrollExpand from "./components/ScrollExpand.jsx";
 import SectionDivider from "./components/SectionDivider.jsx";
 import Milestones from "./components/Milestones.jsx";
 import Journey from "./components/Journey.jsx";
@@ -40,6 +41,28 @@ export default function App() {
       <Header start={show} />
       <main style={{ paddingTop: "5rem", background: "var(--surface)", minHeight: "100vh" }}>
         <Hero start={show} />
+        <ScrollExpand
+          src="/images/honoji-atmosfere.png"
+          alt="Burning castle at Honnō-ji, 1582"
+          title="Enemy At Honnoji!"
+          scrollHint="Scroll"
+          useWindowScroll
+          startRadius={0}
+          endRadius={0}
+          className="honnoji-expand"
+        >
+          <h2>Honnō-ji Incident</h2>
+          <p>
+            The Honnō-ji Incident (1582) was the fatal betrayal of Japanese
+            warlord Oda Nobunaga, who was forced to commit seppuku during a
+            surprise ambush by his vassal, Akechi Mitsuhide, abruptly ending
+            Nobunaga&apos;s near-complete unification of Japan. Though
+            Mitsuhide’s motives remain a historical mystery, his rebellion was
+            crushed just two weeks later by loyal retainer Toyotomi Hideyoshi
+            at the Battle of Yamazaki, avenging Nobunaga and allowing Hideyoshi
+            to seize power and complete the nation&apos;s unification.
+          </p>
+        </ScrollExpand>
         <SectionDivider />
         <Milestones />
         <Journey />
