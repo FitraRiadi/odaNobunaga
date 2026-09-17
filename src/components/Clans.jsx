@@ -32,6 +32,20 @@ export default function Clans() {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.7, delay: (i % 4) * 0.1, ease: EASE }}
             >
+              <motion.div
+                className="clan-figure"
+                initial={reduce ? false : { opacity: 0, y: 110 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{
+                  duration: 0.8,
+                  delay: (i % 4) * 0.1 + 0.15,
+                  ease: EASE,
+                }}
+              >
+                <img src={c.img} alt={c.name} />
+              </motion.div>
+              <div className="clan-body">
               <div>
                 <div className="clan-top">
                   <div className={`clan-mon ${c.tone}`}>{c.mon}</div>
@@ -44,6 +58,7 @@ export default function Clans() {
               <div className="clan-foot">
                 <small>{c.crestLabel}</small>
                 <strong>{c.crest}</strong>
+              </div>
               </div>
             </motion.article>
           ))}

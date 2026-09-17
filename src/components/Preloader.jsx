@@ -10,19 +10,20 @@ export default function Preloader() {
     <div className="preloader" aria-hidden="true">
       <motion.div
         className="preloader-mon"
-        animate={
-          reduce ? undefined : { opacity: [1, 0.55, 1], scale: [1, 1.05, 1] }
-        }
-        transition={
-          reduce ? undefined : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }
-        }
         exit={
           reduce
             ? undefined
-            : { opacity: 0, scale: 1.18, transition: { duration: 0.35, ease: "easeIn" } }
+            : { opacity: 0, scale: 1.25, transition: { duration: 0.3, ease: "easeIn" } }
         }
       >
-        <span className="preloader-mark">織</span>
+        <motion.img
+          className="preloader-mark"
+          src="/oda-clan.svg"
+          alt=""
+          initial={reduce ? false : { opacity: 0, scale: 0.6, rotate: 0 }}
+          animate={reduce ? undefined : { opacity: 1, scale: 1, rotate: 360 }}
+          transition={reduce ? undefined : { duration: 1.2, ease: EASE }}
+        />
       </motion.div>
       <motion.div
         className="preloader-curtain left"

@@ -112,12 +112,12 @@ export default function Hero({ start = false }) {
 
       <div ref={kanjiRef} className="hero-kanji" aria-hidden="true">
         <div className="hero-kanji-shift">
-        <motion.span
-          className="hero-kanji-glyph"
-          {...ent({ opacity: 0, scale: 1.15, y: 40 }, { opacity: 0.04, scale: 1, y: 0 }, 0.1, 1.4)}
-        >
-          武
-        </motion.span>
+        <motion.img
+          src="/oda-clan.svg"
+          alt=""
+          className="hero-crest"
+          {...ent({ opacity: 0, scale: 1.15, y: 40 }, { opacity: 0.12, scale: 1, y: 0 }, 0.1, 1.4)}
+        />
         </div>
       </div>
 
@@ -137,13 +137,14 @@ export default function Hero({ start = false }) {
       </div>
 
       <div ref={titleRef} className="hero-title-block">
+        <h1 className="sr-only">Oda Nobunaga</h1>
         <motion.span
           className="hero-kana"
           {...ent({ opacity: 0, y: 24 }, {}, 0.25, 0.8)}
         >
           織 田 信 長 ・ 天 下 布 武
         </motion.span>
-        <h1 className="hero-h1 hero-h1-fold">
+        <div className="hero-h1 hero-h1-fold" aria-hidden="true">
           {play ? (
             <FoldText
               text="ODA NOBUNAGA"
@@ -164,7 +165,7 @@ export default function Hero({ start = false }) {
               ODA NOBUNAGA
             </span>
           )}
-        </h1>
+        </div>
         <motion.div
           className="hero-divider"
           {...ent({ opacity: 0, scaleX: 0.6 }, {}, 0.7, 0.8)}
