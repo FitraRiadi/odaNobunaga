@@ -1,23 +1,51 @@
+import { useEffect, useState } from "react";
 import { NAV_LINKS } from "../data/content.js";
 
 export default function Header() {
+  const [active, setActive] = useState("overview");
+
+  // Overview = balik mentok ke atas (top hero). Anchor biasa mendaratnya
+  // pas-pasan karena ketutup header + kegeser pin spacer GSAP.
+
+  // Scroll spy: tandai nav sesuai section yang lagi keliatan di layar.
+  // "clans" gak punya link sendiri, jadi dipetakan ke "legacy".
+  useEffect(() => {
+    const ids = [...NAV_LINKS.map((l) => l.id), "clans"];
+    const sections = ids.map((id) => document.getElementById(id)).filter(Boolean);
+    if (!sections.length) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (!visible.length) return;
+        visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        const id = visible[0].target.id;
+        setActive(id === "clans" ? "legacy" : id);
+      },
+      { rootMargin: "-35% 0px -55% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+    sections.forEach((s) => obs.observe(s));
+    return () => obs.disconnect();
+  }, []);
+
+  const scrollTop = (e) => {
+    e.preventDefault();
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+    setActive("overview");
+  };
+
   return (
     <header className="site-header">
       <div className="site-header-inner">
-        <div className="brand">
-          <div className="brand-mark">織</div>
-          <div>
-            <div>
-              <span className="brand-jp">織田信長</span>{" "}
-              <span className="brand-tag">| 天下布武</span>
-            </div>
-            <span className="brand-era">Azuchi-Momoyama Period</span>
-          </div>
-        </div>
-
         <nav className="main-nav" aria-label="Navigasi utama">
           {NAV_LINKS.map((l) => (
-            <a key={l.label} href={l.href} className={l.active ? "active" : ""}>
+            <a
+              key={l.label}
+              href={l.href}
+              className={active === l.id ? "active" : ""}
+              aria-current={active === l.id ? "page" : undefined}
+              onClick={l.id === "overview" ? scrollTop : undefined}
+            >
               {l.label}
             </a>
           ))}
@@ -31,9 +59,6 @@ export default function Header() {
             <span className="material-symbols-outlined">menu_book</span>
             <span>Explore Chronicles</span>
           </a>
-          <div className="avatar" aria-hidden="true">
-            <span className="material-symbols-outlined">person</span>
-          </div>
         </div>
       </div>
     </header>

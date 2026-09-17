@@ -1,9 +1,13 @@
 import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { JOURNEY_NODES } from "../data/content.js";
+import { EASE, useRevealProps } from "../lib/anim.js";
 
 export default function Journey() {
   const [index, setIndex] = useState(0);
   const [fading, setFading] = useState(false);
+  const reduce = useReducedMotion();
+  const head = useRevealProps();
   const node = JOURNEY_NODES[index];
 
   const select = (i) => {
@@ -21,7 +25,7 @@ export default function Journey() {
         覇道
       </div>
       <div className="wrap" style={{ position: "relative", zIndex: 1 }}>
-        <div className="journey-head">
+        <motion.div className="journey-head" {...head}>
           <div className="eyebrow gold">
             <span className="material-symbols-outlined" style={{ fontSize: 18 }}>timeline</span>
             <span>Interactive Strategic Trajectory</span>
@@ -35,7 +39,7 @@ export default function Journey() {
             node to reveal secret archives, troop disbursements, and excerpts from
             the Shinchō Kōki.
           </p>
-        </div>
+        </motion.div>
 
         <div className="journey-path" aria-hidden="false">
           <svg viewBox="0 0 1100 480" fill="none">
@@ -54,15 +58,19 @@ export default function Journey() {
               strokeLinecap="round"
               strokeWidth="4"
             />
-            <path
+            <motion.path
               d="M 80 380 C 240 380, 260 140, 420 140 C 580 140, 600 360, 780 340 C 920 320, 960 180, 1030 180"
               stroke="url(#journeyGlow)"
               strokeLinecap="round"
               strokeWidth="5"
+              initial={reduce ? false : { pathLength: 0, opacity: 0 }}
+              whileInView={{ pathLength: 1, opacity: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 2, ease: "easeInOut" }}
             />
           </svg>
           {JOURNEY_NODES.map((n, i) => (
-            <button
+            <motion.button
               key={n.year}
               type="button"
               className={`j-node${n.red ? " red" : ""}`}
@@ -70,32 +78,41 @@ export default function Journey() {
               onClick={() => select(i)}
               onMouseEnter={() => select(i)}
               aria-label={`${n.year} ${n.short}`}
+              initial={reduce ? false : { opacity: 0, scale: 0 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5, delay: 0.9 + i * 0.15, ease: EASE }}
             >
               <span className="j-node-circle">{n.kanji}</span>
               <small>
                 {n.year} • {n.place}
               </small>
               <span>{n.short}</span>
-            </button>
+            </motion.button>
           ))}
         </div>
 
         <div className="journey-mobile">
           {JOURNEY_NODES.map((n, i) => (
-            <button
+            <motion.button
               key={n.year}
               type="button"
               className={n.red ? "red" : ""}
               onClick={() => select(i)}
+              initial={reduce ? false : { opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5, delay: i * 0.1, ease: EASE }}
             >
               <span>
                 Node {i + 1}: {n.year} {n.short}
               </span>
               <span className="material-symbols-outlined">chevron_right</span>
-            </button>
+            </motion.button>
           ))}
         </div>
 
+        <motion.div {...head}>
         <div className={`story-card${fading ? " fading" : ""}`}>
           <div className="story-grid">
             <div>
@@ -132,6 +149,7 @@ export default function Journey() {
             </div>
           </div>
         </div>
+        </motion.div>
       </div>
     </section>
   );

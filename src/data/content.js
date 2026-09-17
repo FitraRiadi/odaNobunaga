@@ -1,11 +1,11 @@
 // Data konten landing — disadur dari Stitch "Sengoku Era Oda Nobunaga Landing"
 
 export const NAV_LINKS = [
-  { label: "Overview", href: "#overview", active: true },
-  { label: "Chronicles", href: "#milestones", active: false },
-  { label: "Battlefields", href: "#journey", active: false },
-  { label: "Azuchi Castle", href: "#tactics", active: false },
-  { label: "Legacy", href: "#legacy", active: false },
+  { id: "overview", label: "Overview", href: "#overview" },
+  { id: "milestones", label: "Chronicles", href: "#milestones" },
+  { id: "journey", label: "Battlefields", href: "#journey" },
+  { id: "tactics", label: "Azuchi Castle", href: "#tactics" },
+  { id: "legacy", label: "Legacy", href: "#legacy" },
 ];
 
 export const MILESTONES = [

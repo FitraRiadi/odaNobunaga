@@ -1,8 +1,22 @@
+import { motion, useReducedMotion } from "framer-motion";
+import { EASE, useRevealProps } from "../lib/anim.js";
+
 export default function Tactics() {
+  const reduce = useReducedMotion();
+  const head = useRevealProps();
+  const pillar = (i) =>
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 36 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true, amount: 0.2 },
+          transition: { duration: 0.7, delay: (i % 2) * 0.12, ease: EASE },
+        };
   return (
     <section className="tactics" id="tactics">
       <div className="wrap">
-        <div className="section-head split">
+        <motion.div className="section-head split" {...head}>
           <div>
             <span className="eyebrow">Tactical Doctrine &amp; Modernity</span>
             <h2 className="section-title">The Four Pillars of Total Hegemony</h2>
@@ -11,10 +25,10 @@ export default function Tactics() {
             Nobunaga did not merely win battles — he reinvented economics,
             siegecraft, logistics, and ballistics centuries ahead of his feudal peers.
           </p>
-        </div>
+        </motion.div>
 
         <div className="bento">
-          <article className="pillar span7">
+          <motion.article className="pillar span7" {...pillar(0)}>
             <div>
               <div className="pillar-top">
                 <div className="pillar-icon">
@@ -52,9 +66,9 @@ export default function Tactics() {
                 <span>Rank 3: Reloading</span>
               </div>
             </div>
-          </article>
+          </motion.article>
 
-          <article className="pillar span5">
+          <motion.article className="pillar span5" {...pillar(1)}>
             <div>
               <div className="pillar-top">
                 <div className="pillar-icon gold">
@@ -75,9 +89,9 @@ export default function Tactics() {
               <small>Fiscal War Revenue</small>
               <strong>+340% Clan Surplus</strong>
             </div>
-          </article>
+          </motion.article>
 
-          <article className="pillar span5">
+          <motion.article className="pillar span5" {...pillar(2)}>
             <div>
               <div className="pillar-top">
                 <div className="pillar-icon gold">
@@ -98,9 +112,9 @@ export default function Tactics() {
               <small>Masonry Style</small>
               <strong style={{ color: "var(--on-surface)" }}>Ano-shu Cyclopean Stone</strong>
             </div>
-          </article>
+          </motion.article>
 
-          <article className="pillar span7">
+          <motion.article className="pillar span7" {...pillar(3)}>
             <div>
               <div className="pillar-top">
                 <div className="pillar-icon">
@@ -128,7 +142,7 @@ export default function Tactics() {
                 <span className="material-symbols-outlined">check_circle</span> Spanish Glass &amp; Clocks Acquired
               </span>
             </div>
-          </article>
+          </motion.article>
         </div>
       </div>
     </section>

@@ -1,8 +1,12 @@
 import { useRef } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { MILESTONES } from "../data/content.js";
+import { EASE, useRevealProps } from "../lib/anim.js";
 
 export default function Milestones() {
   const trackRef = useRef(null);
+  const reduce = useReducedMotion();
+  const head = useRevealProps();
 
   const scroll = (dir) => {
     trackRef.current?.scrollBy({ left: dir * 380, behavior: "smooth" });
@@ -11,7 +15,7 @@ export default function Milestones() {
   return (
     <section className="milestones" id="milestones">
       <div className="wrap">
-        <div className="section-head split">
+        <motion.div className="section-head split" {...head}>
           <div>
             <div className="eyebrow">
               <span className="pulse-dot" />
@@ -42,11 +46,18 @@ export default function Milestones() {
               <span className="material-symbols-outlined">arrow_forward</span>
             </button>
           </div>
-        </div>
+        </motion.div>
 
         <div className="track" ref={trackRef}>
-          {MILESTONES.map((m) => (
-            <article className="m-card" key={m.year + m.title}>
+          {MILESTONES.map((m, i) => (
+            <motion.article
+              className="m-card"
+              key={m.year + m.title}
+              initial={reduce ? false : { opacity: 0, x: 48 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: Math.min(i, 4) * 0.08, ease: EASE }}
+              viewport={{ once: true, amount: 0.25 }}
+            >
               <div>
                 <div className="m-top">
                   <span className={`m-year${m.yearRed ? " red" : ""}`}>{m.year}</span>
@@ -67,7 +78,7 @@ export default function Milestones() {
                   <strong className={m.stat2Tone}>{m.stat2}</strong>
                 </div>
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>

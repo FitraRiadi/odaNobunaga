@@ -126,9 +126,9 @@ body {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 50;
-  background: rgba(19, 19, 21, 0.9);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.25) 70%, transparent);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
 .site-header-inner {
   max-width: 80rem;
@@ -142,29 +142,6 @@ body {
 }
 @media (min-width: 1024px) {
   .site-header-inner { padding-inline: var(--margin); }
-}
-.brand { display: flex; align-items: center; gap: var(--space-md); }
-.brand-mark {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 999px;
-  background: var(--high);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--gold);
-  font-family: var(--serif);
-  font-weight: 700;
-}
-.brand-jp { font-family: var(--serif); font-weight: 600; letter-spacing: 0.2em; color: var(--gold); }
-.brand-tag { color: var(--on-variant); font-size: 12px; }
-.brand-era {
-  display: block;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--outline);
 }
 .main-nav { display: none; }
 @media (min-width: 1024px) {
@@ -208,16 +185,6 @@ body {
 }
 @media (min-width: 640px) { .btn-chronicles { display: inline-flex; } }
 .btn-chronicles:hover { background: var(--vermilion-deep); }
-.avatar {
-  width: 2rem;
-  height: 2rem;
-  border-radius: 999px;
-  background: var(--rose);
-  color: #660900;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
 /* ---------- hero ---------- */
 .hero {

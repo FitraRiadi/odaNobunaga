@@ -1,10 +1,14 @@
+import { motion, useReducedMotion } from "framer-motion";
 import { CLANS } from "../data/content.js";
+import { EASE, useRevealProps } from "../lib/anim.js";
 
 export default function Clans() {
+  const reduce = useReducedMotion();
+  const head = useRevealProps();
   return (
     <section className="clans" id="clans">
       <div className="wrap">
-        <div className="journey-head">
+        <motion.div className="journey-head" {...head}>
           <div className="eyebrow gold">
             <span className="material-symbols-outlined" style={{ fontSize: 18 }}>group_work</span>
             <span>Daimyo Power Dynamics</span>
@@ -16,11 +20,18 @@ export default function Clans() {
             The intricate tapestry of Sengoku politics: those who pledged iron oaths
             to Nobunaga and those who fought him to the bitter death.
           </p>
-        </div>
+        </motion.div>
 
         <div className="clan-grid">
-          {CLANS.map((c) => (
-            <article className="clan" key={c.name}>
+          {CLANS.map((c, i) => (
+            <motion.article
+              className="clan"
+              key={c.name}
+              initial={reduce ? false : { opacity: 0, y: 36 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, delay: (i % 4) * 0.1, ease: EASE }}
+            >
               <div>
                 <div className="clan-top">
                   <div className={`clan-mon ${c.tone}`}>{c.mon}</div>
@@ -34,7 +45,7 @@ export default function Clans() {
                 <small>{c.crestLabel}</small>
                 <strong>{c.crest}</strong>
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>
