@@ -22,7 +22,15 @@ export default function Preloader() {
           alt=""
           initial={reduce ? false : { opacity: 0, scale: 0.6, rotate: 0 }}
           animate={reduce ? undefined : { opacity: 1, scale: 1, rotate: 360 }}
-          transition={reduce ? undefined : { duration: 1.2, ease: EASE }}
+          transition={
+            reduce
+              ? undefined
+              : {
+                  opacity: { duration: 0.6 },
+                  scale: { duration: 0.6, ease: EASE },
+                  rotate: { duration: 2.8, ease: "linear", repeat: Infinity },
+                }
+          }
         />
       </motion.div>
       <motion.div

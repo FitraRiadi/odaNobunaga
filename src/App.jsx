@@ -17,14 +17,22 @@ export default function App() {
   const ready = useAssetsReady();
   const reduce = useReducedMotion();
 
+  // Payload beres → tahan 2 detik dulu, baru tirai dibuka.
+  const [leaving, setLeaving] = useState(false);
+  useEffect(() => {
+    if (!ready) return;
+    const t = window.setTimeout(() => setLeaving(true), reduce ? 0 : 2000);
+    return () => window.clearTimeout(t);
+  }, [ready, reduce]);
+
   // Entrance jalan SETELAH tirai kebuka penuh (bukan barengan),
   // biar intro gak kemakan animasi tirai.
   const [show, setShow] = useState(false);
   useEffect(() => {
-    if (!ready) return;
+    if (!leaving) return;
     const t = window.setTimeout(() => setShow(true), reduce ? 0 : 1050);
     return () => window.clearTimeout(t);
-  }, [ready, reduce]);
+  }, [leaving, reduce]);
 
   // Kunci scroll selama loader tampil — section bawah gak bisa
   // ke-trigger sebelum loading beres.
@@ -37,7 +45,7 @@ export default function App() {
 
   return (
     <>
-      <AnimatePresence>{!ready && <Preloader key="preloader" />}</AnimatePresence>
+      <AnimatePresence>{!leaving && <Preloader key="preloader" />}</AnimatePresence>
       <Header start={show} />
       <main style={{ paddingTop: "5rem", background: "var(--surface)", minHeight: "100vh" }}>
         <Hero start={show} />
