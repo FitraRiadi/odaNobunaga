@@ -45,9 +45,19 @@ export default function Clans() {
                   ease: EASE,
                 }}
               >
-                <span className={`clan-emblem ${c.tone}`} aria-hidden="true">
-                  {c.mon}
-                </span>
+                {c.crestImg ? (
+                  <div className="clan-crest-wrap" aria-hidden="true">
+                    <img
+                      className={`clan-crest ${c.tone}`}
+                      src={c.crestImg}
+                      alt=""
+                    />
+                  </div>
+                ) : (
+                  <span className={`clan-emblem ${c.tone}`} aria-hidden="true">
+                    {c.mon}
+                  </span>
+                )}
                 <img src={c.img} alt={c.name} />
                 <span className="glare-sweep idle" aria-hidden="true" />
                 <span className="glare-sweep hover" aria-hidden="true" />

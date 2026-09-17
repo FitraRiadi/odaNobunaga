@@ -798,6 +798,26 @@ body {
 }
 .clan-emblem.gold { color: var(--gold); opacity: 0.1; }
 .clan-emblem.red { color: var(--vermilion); opacity: 0.12; }
+/* Logo clan: overlay full-area + flex centering (pola yang sama kayak
+   emblem kanji dulu — dijamin ketengah, gak pake margin-auto). */
+.clan-crest-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.clan-crest {
+  width: 210px;
+  height: 210px;
+  object-fit: contain;
+  opacity: 0.14;
+  user-select: none;
+}
+.clan-crest.gold { filter: drop-shadow(0 0 24px rgba(236, 192, 108, 0.25)); }
+.clan-crest.red { filter: drop-shadow(0 0 24px rgba(197, 61, 38, 0.35)); }
 /* Beda fase + tempo tiap kartu biar gak robotik (negatif = mulai acak). */
 .clan-grid .clan:nth-child(2) .clan-figure img { animation-delay: -1.2s; animation-duration: 5.6s; }
 .clan-grid .clan:nth-child(3) .clan-figure img { animation-delay: -2.8s; animation-duration: 4.6s; }
