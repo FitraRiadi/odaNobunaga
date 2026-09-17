@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { CLANS } from "../data/content.js";
 import { EASE, useRevealProps } from "../lib/anim.js";
+import "./GlareHover.css";
 
 export default function Clans() {
   const reduce = useReducedMotion();
@@ -34,6 +35,7 @@ export default function Clans() {
             >
               <motion.div
                 className="clan-figure"
+                style={{ "--fig": `url(${c.img})` }}
                 initial={reduce ? false : { opacity: 0, y: 110 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.4 }}
@@ -44,6 +46,8 @@ export default function Clans() {
                 }}
               >
                 <img src={c.img} alt={c.name} />
+                <span className="glare-sweep idle" aria-hidden="true" />
+                <span className="glare-sweep hover" aria-hidden="true" />
               </motion.div>
               <div className="clan-body">
               <div>

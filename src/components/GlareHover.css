@@ -1,0 +1,61 @@
+/* Glare sweep — diadaptasi dari React Bits <GlareHover />.
+   Yang dipakai cuma mekanik kilaunya (gradient + posisi background ngikutin
+   hover). Box fixed/border/radius bawaan komponen asli dibuang karena figur
+   kita yang nentuin ukuran. Mask siluet biar kilau gak bocor ke background. */
+.glare-sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    var(--glare-angle, -30deg),
+    hsla(0, 0%, 0%, 0) 60%,
+    var(--glare-rgba, rgba(255, 233, 196, 0.4)) 70%,
+    hsla(0, 0%, 0%, 0),
+    hsla(0, 0%, 0%, 0) 100%
+  );
+  background-size:
+    250% 250%,
+    100% 100%;
+  background-repeat: no-repeat;
+  background-position:
+    -100% -100%,
+    0 0;
+  -webkit-mask-image: var(--fig);
+  mask-image: var(--fig);
+  -webkit-mask-size: auto 210px;
+  mask-size: auto 210px;
+  -webkit-mask-position: center bottom;
+  mask-position: center bottom;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* Lapis hover: nyapu pas card di-hover/tap. */
+.glare-sweep.hover {
+  transition: background-position 0.8s ease;
+}
+
+/* Lapis idle: nyapu sendiri tiap 6 detik (snap baliknya tak kelihatan
+   karena di kedua ujung band cahayanya lagi di luar figur). */
+.glare-sweep.idle {
+  animation: glare-idle 6s ease-in-out infinite;
+}
+@keyframes glare-idle {
+  0%, 72% {
+    background-position:
+      -100% -100%,
+      0 0;
+  }
+  92%, 100% {
+    background-position:
+      100% 100%,
+      0 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .glare-sweep {
+    -webkit-mask-size: auto 230px;
+    mask-size: auto 230px;
+  }
+}

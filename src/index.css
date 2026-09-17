@@ -529,6 +529,7 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-era-track, .scroll-hint, .hero-figure img, .clan-figure img { animation: none; }
+  .glare-sweep { display: none; }
 }
 
 /* ---------- milestones carousel ---------- */
@@ -768,6 +769,17 @@ body {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
 }
+/* Glare hover jalan pas card di-hover (mouse) / tap (touch). */
+.clan:hover .glare-sweep.hover,
+.clan:active .glare-sweep.hover {
+  background-position:
+    100% 100%,
+    0 0;
+}
+/* Glare idle beda fase tiap kartu biar gak barengan. */
+.clan-grid .clan:nth-child(2) .glare-sweep.idle { animation-delay: -1.7s; }
+.clan-grid .clan:nth-child(3) .glare-sweep.idle { animation-delay: -3.4s; }
+.clan-grid .clan:nth-child(4) .glare-sweep.idle { animation-delay: -5.1s; }
 @media (min-width: 1024px) { .clan-figure img { height: 230px; } }
 .clan-body {
   position: relative;
