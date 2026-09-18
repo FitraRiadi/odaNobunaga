@@ -23,16 +23,30 @@ export default function Footer() {
                 <strong>Headquarters</strong>
                 <span>Azuchi Tenshu, Ōmi</span>
               </div>
-              <div>
-                <strong>Philosophy</strong>
-                <span>天下布武 (Tenka Fubu)</span>
-              </div>
+            <div>
+              <strong>Philosophy</strong>
+              <span>天下布武 (Tenka Fubu)</span>
+            </div>
+            <div>
+              <strong>Author</strong>
+              <span>By Fitra Riadi</span>
+            </div>
+            <div>
+              <strong>GitHub</strong>
+              <a
+                href="https://github.com/FitraRiadi"
+                target="_blank"
+                rel="noreferrer"
+              >
+                github.com/FitraRiadi
+              </a>
+            </div>
             </div>
           </div>
         </Reveal>
         <Reveal y={12} delay={0.1}>
           <div className="footer-base">
-            <span>© 1582 — 2025 Sengoku Archives. Built with React + Vite.</span>
+            <span>© 1582 — 2025 Sengoku Archives.</span>
             <span>ARCHIVE • CIPHER • WAR CHRONOLOGY • SCHOLARSHIP</span>
           </div>
         </Reveal>

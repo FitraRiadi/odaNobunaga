@@ -1005,6 +1005,8 @@ section[id] { scroll-margin-top: 4rem; }
 .footer-note { color: var(--on-variant); max-width: 28rem; }
 .footer-meta { display: flex; gap: var(--space-lg); flex-wrap: wrap; font-size: 12px; color: var(--outline); }
 .footer-meta strong { display: block; color: var(--gold); font-family: var(--serif); }
+.footer-meta a { color: var(--gold-pale); text-decoration: none; }
+.footer-meta a:hover { text-decoration: underline; }
 .footer-base { margin-top: var(--space-lg); padding-top: var(--space-md); border-top: 1px solid var(--highest); display: flex; justify-content: space-between; gap: var(--space-sm); flex-wrap: wrap; font-size: 12px; color: var(--outline); }
 
 /* ---------- Intro prolog (ScrollReveal) ---------- */
