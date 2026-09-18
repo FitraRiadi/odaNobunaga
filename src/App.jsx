@@ -3,6 +3,7 @@ import { AnimatePresence, useReducedMotion } from "framer-motion";
 import Header from "./components/Header.jsx";
 import Hero from "./components/Hero.jsx";
 import Preloader from "./components/Preloader.jsx";
+import Intro from "./components/Intro.jsx";
 import ScrollExpand from "./components/ScrollExpand.jsx";
 import SectionDivider from "./components/SectionDivider.jsx";
 import Milestones from "./components/Milestones.jsx";
@@ -124,6 +125,7 @@ export default function App() {
       <Header start={show} playing={playing} onToggleMusic={toggleMusic} />
       <main style={{ paddingTop: "5rem", background: "var(--surface)", minHeight: "100vh" }}>
         <Hero start={show} />
+        <Intro />
         <ScrollExpand
           src="/images/honoji-atmosfere.png"
           alt="Burning castle at Honnō-ji, 1582"
