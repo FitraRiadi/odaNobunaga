@@ -601,6 +601,7 @@ body {
   scrollbar-width: none;
 }
 .track::-webkit-scrollbar { display: none; }
+.m-card { will-change: transform; }
 .m-card {
   scroll-snap-align: start;
   flex-shrink: 0;

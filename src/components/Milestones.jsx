@@ -8,8 +8,13 @@ export default function Milestones() {
   const reduce = useReducedMotion();
   const head = useRevealProps();
 
+  // Geser pas 1 kartu (lebar kartu + gap) biar gak berantem sama snap.
   const scroll = (dir) => {
-    trackRef.current?.scrollBy({ left: dir * 380, behavior: "smooth" });
+    const el = trackRef.current;
+    if (!el) return;
+    const card = el.querySelector(".m-card");
+    const step = card ? card.offsetWidth + 24 : 380;
+    el.scrollBy({ left: dir * step, behavior: reduce ? "auto" : "smooth" });
   };
 
   return (
@@ -53,8 +58,8 @@ export default function Milestones() {
             <motion.article
               className="m-card"
               key={m.year + m.title}
-              initial={reduce ? false : { opacity: 0, x: 48 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={reduce ? false : { opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: Math.min(i, 4) * 0.08, ease: EASE }}
               viewport={{ once: true, amount: 0.25 }}
             >
