@@ -355,7 +355,7 @@ body {
 }
 .castle-wing {
   position: absolute;
-  bottom: 5rem;
+  bottom: 0;
   z-index: 3;
   width: 260px;
   pointer-events: none;
@@ -377,13 +377,13 @@ body {
 .hero-figure {
   position: absolute;
   inset-inline: 0;
-  top: 14%;
+  bottom: 0;
   z-index: 4;
   display: flex;
   justify-content: center;
   pointer-events: none;
 }
-@media (min-width: 640px) { .hero-figure { top: 12%; } }
+@media (min-width: 640px) { .hero-figure { top: 12%; bottom: auto; } }
 .hero-figure-inner { position: relative; width: 300px; max-height: 720px; display: flex; align-items: flex-end; justify-content: center; }
 @media (min-width: 640px) { .hero-figure-inner { width: 380px; } }
 @media (min-width: 1024px) { .hero-figure-inner { width: 480px; } }
@@ -422,6 +422,8 @@ body {
 }
 @media (min-width: 1024px) { .hero-cta { padding-inline: var(--margin); } }
 .hero-badges { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: var(--space-sm); margin-bottom: var(--space-md); }
+/* Mobile: badges disembunyiin biar lega (figur + kastil mentok bawah). */
+@media (max-width: 639px) { .hero-badges { display: none; } }
 .hero-badge {
   display: inline-flex;
   align-items: center;
