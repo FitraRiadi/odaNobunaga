@@ -145,17 +145,76 @@ body {
 }
 .main-nav { display: none; }
 @media (min-width: 1024px) {
-  .main-nav { display: flex; align-items: center; gap: var(--space-lg); }
-  .main-nav a {
-    color: var(--on-variant);
-    text-decoration: none;
-    padding: 0.25rem 0.75rem;
-    font-size: 14px;
-    transition: color 0.2s;
-  }
-  .main-nav a:hover { color: var(--on-surface); }
-  .main-nav a.active { color: var(--gold); background: var(--high); font-family: var(--serif); }
+  .main-nav { display: flex; align-items: center; }
 }
+/* RubberSegment rasa Sengoku: track transparan tipis, jempol emas. */
+.nav-rubber {
+  font-family: var(--sans);
+  letter-spacing: 0.04em;
+}
+/* Tombol hamburger: mobile doang. */
+@media (min-width: 1024px) {
+  .icon-btn.menu-btn { display: none; }
+}
+/* Panel dropdown mobile. */
+.mobile-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(14, 14, 16, 0.97);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--highest);
+  padding: var(--space-sm) var(--margin-mobile) var(--space-md);
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 1024px) {
+  .mobile-panel { display: none; }
+}
+.mobile-panel a {
+  color: var(--on-variant);
+  text-decoration: none;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.7rem 0.25rem;
+  border-bottom: 1px solid var(--container);
+  display: grid;
+  grid-template-columns: 2rem 1fr auto;
+  align-items: center;
+}
+.mobile-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 0.25rem 0.6rem;
+  margin-bottom: 0.35rem;
+  border-bottom: 1px solid var(--gold-deep);
+}
+.mobile-panel-head span:first-child {
+  font-family: var(--serif);
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  font-size: 13px;
+}
+.mobile-panel-head span:last-child {
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--outline);
+}
+.mobile-index {
+  font-family: var(--serif);
+  font-size: 13px;
+  color: var(--gold);
+}
+.mobile-panel a:last-child { border-bottom: 0; }
+.mobile-panel a.active { color: var(--gold); }
+.mobile-panel a .material-symbols-outlined { font-size: 18px; }
+/* Anchor scroll gak ketutup header fixed. */
+section[id] { scroll-margin-top: 4rem; }
 .header-actions { display: flex; align-items: center; gap: var(--space-md); }
 .icon-btn {
   width: 2.5rem;
