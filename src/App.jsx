@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, useReducedMotion } from "framer-motion";
 import Header from "./components/Header.jsx";
 import Hero from "./components/Hero.jsx";
@@ -17,13 +17,21 @@ export default function App() {
   const ready = useAssetsReady();
   const reduce = useReducedMotion();
 
-  // Payload beres → tahan 2 detik dulu, baru tirai dibuka.
+  // Payload beres → tahan 2 detik dulu, baru tawarin mulai.
+  // Klik = gestur resmi → browser ngasih izin suara (autoplay musik jalan).
+  // Pengaman: kalau gak diklik 12 detik, tirai kebuka sendiri.
+  const [invited, setInvited] = useState(false);
   const [leaving, setLeaving] = useState(false);
   useEffect(() => {
     if (!ready) return;
-    const t = window.setTimeout(() => setLeaving(true), reduce ? 0 : 2000);
+    const t = window.setTimeout(() => setInvited(true), reduce ? 0 : 2000);
     return () => window.clearTimeout(t);
   }, [ready, reduce]);
+  useEffect(() => {
+    if (!invited || leaving) return;
+    const t = window.setTimeout(() => setLeaving(true), reduce ? 0 : 12000);
+    return () => window.clearTimeout(t);
+  }, [invited, leaving, reduce]);
 
   // Entrance jalan SETELAH tirai kebuka penuh (bukan barengan),
   // biar intro gak kemakan animasi tirai.
@@ -43,10 +51,77 @@ export default function App() {
     };
   }, [show]);
 
+  // Musik ambience: loop, coba auto-play pas intro mulai. Browser ngeblokir
+  // suara sebelum ada gestur user → kalau ditolak, tunggu klik/sentuh
+  // pertama baru main. Tombol navbar tetap bisa toggle manual.
+  const audioRef = useRef(null);
+  const [playing, setPlaying] = useState(false);
+  useEffect(() => {
+    const audio = new Audio("/sfx/sengoku-music.mp3");
+    audio.loop = true;
+    audio.volume = 0.5;
+    audio.preload = "auto";
+    audioRef.current = audio;
+    return () => {
+      audio.pause();
+      audioRef.current = null;
+    };
+  }, []);
+  useEffect(() => {
+    if (!show) return;
+    let cancelled = false;
+    const cleanup = () => {
+      window.removeEventListener("pointerdown", onGesture);
+      window.removeEventListener("keydown", onGesture);
+    };
+    const tryPlay = () =>
+      audioRef.current
+        ?.play()
+        .then(() => {
+          if (!cancelled) {
+            setPlaying(true);
+            cleanup();
+          }
+        })
+        .catch(() => {});
+    function onGesture() {
+      tryPlay();
+    }
+    tryPlay();
+    window.addEventListener("pointerdown", onGesture);
+    window.addEventListener("keydown", onGesture);
+    return () => {
+      cancelled = true;
+      cleanup();
+    };
+  }, [show]);
+
+  const toggleMusic = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (playing) {
+      audio.pause();
+      setPlaying(false);
+    } else {
+      audio
+        .play()
+        .then(() => setPlaying(true))
+        .catch(() => {});
+    }
+  };
+
   return (
     <>
-      <AnimatePresence>{!leaving && <Preloader key="preloader" />}</AnimatePresence>
-      <Header start={show} />
+      <AnimatePresence>
+        {!leaving && (
+          <Preloader
+            key="preloader"
+            invited={invited}
+            onEnter={() => setLeaving(true)}
+          />
+        )}
+      </AnimatePresence>
+      <Header start={show} playing={playing} onToggleMusic={toggleMusic} />
       <main style={{ paddingTop: "5rem", background: "var(--surface)", minHeight: "100vh" }}>
         <Hero start={show} />
         <ScrollExpand

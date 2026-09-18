@@ -170,6 +170,7 @@ body {
   transition: background 0.2s;
 }
 .icon-btn:hover { background: var(--high); }
+.icon-btn.playing { background: var(--gold-deep); color: var(--gold-pale); }
 .btn-chronicles {
   display: none;
   align-items: center;
@@ -444,6 +445,7 @@ body {
 
 /* ---------- preloader tirai ---------- */
 .preloader { position: fixed; inset: 0; z-index: 100; background: var(--lowest); }
+.preloader.invited { cursor: pointer; }
 .preloader-curtain {
   position: absolute;
   top: 0;
@@ -478,13 +480,16 @@ body {
   height: 5rem;
   filter: drop-shadow(0 0 24px rgba(236, 192, 108, 0.4));
 }
-.preloader-label {
-  font-size: 10px;
-  letter-spacing: 0.4em;
-  /* tracking nyisain spasi di kanan → padding kiri biar glyph beneran tengah */
-  padding-left: 0.4em;
-  text-transform: uppercase;
-  color: var(--gold);
+.preloader-start {
+  font-size: 13px;
+  letter-spacing: 0.3em;
+  padding-left: 0.3em;
+  color: var(--gold-pale);
+}
+/* Cadangan sebelum invited: tak kelihatan tapi ruangnya dicadangkan,
+   biar logo gak kegeser pas teksnya nyala. */
+.preloader-start:not(.show) {
+  opacity: 0;
 }
 
 /* ---------- ScrollExpand Honnō-ji (theming, logic tetap ori) ---------- */

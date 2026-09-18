@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { NAV_LINKS } from "../data/content.js";
 
-export default function Header({ start = true }) {
+export default function Header({ start = true, playing = false, onToggleMusic }) {
   const reduce = useReducedMotion();
   const [active, setActive] = useState("overview");
 
@@ -57,8 +57,16 @@ export default function Header({ start = true }) {
         </nav>
 
         <div className="header-actions">
-          <button className="icon-btn" type="button" aria-label="Ambiance Sound">
-            <span className="material-symbols-outlined">volume_up</span>
+          <button
+            className={`icon-btn${playing ? " playing" : ""}`}
+            type="button"
+            aria-label={playing ? "Matikan musik ambience" : "Nyalakan musik ambience"}
+            aria-pressed={playing}
+            onClick={onToggleMusic}
+          >
+            <span className="material-symbols-outlined">
+              {playing ? "volume_up" : "volume_off"}
+            </span>
           </button>
           <a className="btn-chronicles" href="#milestones">
             <span className="material-symbols-outlined">menu_book</span>
