@@ -10,7 +10,7 @@ export const NAV_LINKS = [
 
 export const MILESTONES = [{
         year: "1560",
-        tag: "BATTLE SHOCK",
+        tag: "Battle Shock",
         tagTone: "",
         title: "Battle of Okehazama",
         jp: "桶狭間の戦い • Lightning Strike",
@@ -26,7 +26,7 @@ export const MILESTONES = [{
     },
     {
         year: "1570",
-        tag: "CLAN COALITION",
+        tag: "Clan Coalition",
         tagTone: "gold",
         title: "Battle of Anegawa",
         jp: "姉川の戦い • Oda-Tokugawa Pact",
@@ -42,7 +42,7 @@ export const MILESTONES = [{
     },
     {
         year: "1575",
-        tag: "MILITARY REVOLUTION",
+        tag: "Military Revolution",
         tagTone: "",
         title: "Battle of Nagashino",
         jp: "長篠の戦い • The Arquebus Wall",
@@ -58,7 +58,7 @@ export const MILESTONES = [{
     },
     {
         year: "1576",
-        tag: "IMPERIAL ARCHITECTURE",
+        tag: "Imperial Architecture",
         tagTone: "sand",
         title: "Azuchi Tenshu Erection",
         jp: "安土城築城 • Citadel of Splendor",
@@ -74,7 +74,7 @@ export const MILESTONES = [{
     },
     {
         year: "1582",
-        tag: "IMMORTAL LEGEND",
+        tag: "Immortal Legend",
         tagTone: "dark-red",
         title: "Incident at Honnō-ji",
         jp: "本能寺の変 • The Eternal Fire",

@@ -9,12 +9,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
 
-const BADGES = [
-  { icon: "verified", text: "TENKA FUBU • 天下布武", gold: true },
-  { icon: "calendar_month", text: "ERA: 1534 — 1582 CE", gold: false },
-  { icon: "shield", text: "ODA CLAN KAMON • 織田木瓜", gold: false },
-];
-
 // Entrance hero DI-GATE prop `start` (dari preloader di App).
 // Sebelum start=true semua elemen parkir di "hidden" — jadi koreografi
 // selalu mulai dari kondisi aset lengkap, gak ada "jep" pas hard refresh.
@@ -28,7 +22,6 @@ export default function Hero({ start = false }) {
   const castleLRef = useRef(null);
   const castleRRef = useRef(null);
   const figureRef = useRef(null);
-  const badgesRef = useRef(null);
 
   const play = start || reduce;
   const ent = (hidden, to, delay, duration) => ({
@@ -69,8 +62,7 @@ export default function Hero({ start = false }) {
         .fromTo(castleRRef.current, { xPercent: 0, opacity: 1 }, { xPercent: 30, opacity: 0 }, 0)
         .fromTo(figureRef.current, { y: 0, scale: 1, opacity: 1 }, { y: 200, scale: 1.08, opacity: 0 }, 0)
         .fromTo(kanjiRef.current, { scale: 1, opacity: 1 }, { scale: 1.35, opacity: 0 }, 0)
-        .fromTo(eraRef.current, { xPercent: 0, opacity: 1 }, { xPercent: -8, opacity: 0 }, 0)
-        .fromTo(badgesRef.current, { y: 0, opacity: 1 }, { y: 90, opacity: 0 }, 0);
+        .fromTo(eraRef.current, { xPercent: 0, opacity: 1 }, { xPercent: -8, opacity: 0 }, 0);
     }, sectionRef);
     return () => ctx.revert();
   }, [reduce ]);
@@ -182,6 +174,7 @@ export default function Hero({ start = false }) {
 
       <div ref={castleLRef} className="castle-wing left" aria-hidden="true">
         <motion.div
+          className="castle-slide"
           {...ent({ x: -120, opacity: 0 }, {}, 0.55, 1)}
         >
           <img src="/images/castle-left.png" alt="" />
@@ -189,6 +182,7 @@ export default function Hero({ start = false }) {
       </div>
       <div ref={castleRRef} className="castle-wing right" aria-hidden="true">
         <motion.div
+          className="castle-slide"
           {...ent({ x: 120, opacity: 0 }, {}, 0.55, 1)}
         >
           <img src="/images/castle-right.png" alt="" />
@@ -205,19 +199,6 @@ export default function Hero({ start = false }) {
       </div>
 
       <div className="hero-cta">
-        <div ref={badgesRef} className="hero-badges">
-          {BADGES.map((b, i) => (
-            <motion.div
-              key={b.text}
-              className={`hero-badge${b.gold ? " gold" : ""}`}
-              {...ent({ opacity: 0, y: 16 }, {}, 1.05 + i * 0.12, 0.5)}
-            >
-              <span className="material-symbols-outlined">{b.icon}</span>
-              <span>{b.text}</span>
-            </motion.div>
-          ))}
-        </div>
-
         <div className="scroll-hint" aria-hidden="true">
           <span className="material-symbols-outlined">expand_more</span>
         </div>
