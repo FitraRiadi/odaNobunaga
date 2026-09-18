@@ -602,6 +602,37 @@ body {
 }
 .track::-webkit-scrollbar { display: none; }
 .m-card { will-change: transform; }
+
+/* ---------- scroll-jack sinematik (aktif hanya via .is-jacked) ---------- */
+.milestones.is-jacked { overflow: hidden; }
+.milestones.is-jacked .wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.milestones.is-jacked .track {
+  overflow: visible;
+  width: max-content;
+  max-width: none;
+  padding-right: var(--margin);
+}
+.milestones.is-jacked .carousel-nav { display: none; }
+.jack-progress { display: none; }
+.milestones.is-jacked .jack-progress {
+  display: block;
+  height: 2px;
+  background: rgba(236, 192, 108, 0.15);
+  margin-top: var(--space-lg);
+  overflow: hidden;
+}
+.jack-progress span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(to right, var(--vermilion), var(--gold));
+  transform: scaleX(0);
+  transform-origin: left center;
+}
 .m-card {
   scroll-snap-align: start;
   flex-shrink: 0;
